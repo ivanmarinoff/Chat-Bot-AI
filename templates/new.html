@@ -1,0 +1,28 @@
+<!-- chatbot.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <!-- Include CSRF token -->
+    {% csrf_token %}
+</head>
+<body>
+    <div>
+        <!-- Your chatbot interface content here -->
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="message" placeholder="Type your message...">
+            <button type="submit">Send</button>
+        </form>
+        <!-- Display response or error message -->
+        {% if response %}
+            <p>{{ response }}</p>
+        {% endif %}
+        {% if error %}
+            <p>{{ error }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
