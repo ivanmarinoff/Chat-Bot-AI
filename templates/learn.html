@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Learn</title>
+    <!-- Include CSRF token -->
+    {% csrf_token %}
+</head>
+<body>
+    <div>
+        <h1>Learn Chatbot</h1>
+        <form id="learnForm" method="post" action="{% url 'learn_chatbot' %}">
+            {% csrf_token %}
+            <label for="tag">Tag:</label>
+            <input type="text" id="tag" name="tag"><br>
+            <label for="message">Message:</label>
+            <input type="text" id="message" name="message"><br>
+            <label for="reply">Reply:</label>
+            <input type="text" id="reply" name="reply"><br>
+            <button type="button" onclick="learnChatbot()">Learn</button>
+        </form>
+        <!-- Display response or error message -->
+        <div id="responseMessage"></div>
+    </div>
+
+    <script>
+        function learnChatbot() {
+            const tag = document.getElementById('tag').value;
+            const message = document.getElementById('message').value;
+            const reply = document.getElementById('reply').value;
+
+            const data = {
+                'tag': tag,
+                'message': message,
+                'reply': reply
+            };
+
+            fetch('/learn_chatbot/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'  // Ensure CSRF token is included
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data.message);
+                document.getElementById('responseMessage').innerText = data.message;
+                // Optionally, you can reset the form fields after successful submission
+                document.getElementById('tag').value = '';
+                document.getElementById('message').value = '';
+                document.getElementById('reply').value = '';
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>

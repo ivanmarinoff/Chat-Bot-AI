@@ -1,10 +1,10 @@
-<!-- chatbot.html -->
+<!-- new.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot</title>
+    <title>Chatbot Learn</title>
     <!-- Include CSRF token -->
     {% csrf_token %}
 </head>
@@ -13,7 +13,7 @@
         <!-- Your chatbot interface content here -->
         <form method="post">
             {% csrf_token %}
-            <input type="text" name="message" placeholder="Type your message...">
+            <input type="text" name="message" placeholder="Learn page">
             <button type="submit">Send</button>
         </form>
         <!-- Display response or error message -->
