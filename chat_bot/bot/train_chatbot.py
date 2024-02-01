@@ -1,25 +1,26 @@
+import os
+
 import nltk
 # from keras.src.optimizers import SGD
 import keras
 from nltk.stem import WordNetLemmatizer
-lemmatizer = WordNetLemmatizer()
+
+
 import json
 import pickle
 import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense, Dropout
 import random
-
-
+import time
 
 words = []
 classes = []
 documents = []
 ignore_words = ['?', '!', ',']
-data_file = open('../intents.json').read()
+data_file = open('chat_bot/intents.json').read()
 intents = json.loads(data_file)
-
-
+lemmatizer = WordNetLemmatizer()
 for intent in intents['intents']:
     for pattern in intent['patterns']:
         w = nltk.word_tokenize(pattern)
@@ -75,7 +76,23 @@ adam = keras.optimizers.Adam(0.001)
 model.compile(optimizer=adam, loss='categorical_crossentropy', metrics=['accuracy'])
 
 
-hist = model.fit(np.array(train_x), np.array(train_y), epochs=200, batch_size=5, verbose=1)
-# model.save('chatbot_model.h5', hist)
-model.save('../chatbot_model.keras', hist)
-print("model created")
+def train_chatbot():
+    hist = model.fit(np.array(train_x), np.array(train_y), epochs=200, batch_size=5, verbose=1)
+    # model.save('chatbot_model.h5', hist)
+    model.save('../chatbot_model.keras', hist)
+    print("model created")
+
+# def check_json_changes():
+#     # Get the last modification time of the JSON file
+#     last_modified = os.path.getmtime('intents.json')
+#     # Check if the file has been updated since the last check
+#     if last_modified != check_json_changes.last_modified:
+#         # Update the last modified timestamp
+#         check_json_changes.last_modified = last_modified
+#         # Call the function to retrain the chatbot
+#         train_chatbot()
+#
+# # Run training loop indefinitely with a sleep interval of 1 hour
+# while True:
+#     train_chatbot()
+#     time.sleep(3600)  # Sleep for 1 hour (3600 seconds)

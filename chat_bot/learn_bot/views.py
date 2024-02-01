@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from chat_bot.bot.views import intents
 
 
+
 class LearnChatbotView(View):
     def get(self, request):
         return render(request, 'learn.html')
@@ -37,3 +38,15 @@ class LearnChatbotView(View):
         #     intents = json.load(infile)
 
         return JsonResponse({'message': f'Learning wit tag {tag} completed successfully'}, status=200)
+
+
+# def check_json_changes():
+#     # Get the last modification time of the JSON file
+#     last_modified = os.path.getmtime('intents.json')
+#     # Check if the file has been updated since the last check
+#     if last_modified != check_json_changes.last_modified:
+#         # Update the last modified timestamp
+#         check_json_changes.last_modified = last_modified
+#         # Call the function to retrain the chatbot
+#         train_chatbot()
+
