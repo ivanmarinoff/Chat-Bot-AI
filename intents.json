@@ -642,10 +642,10 @@
         {
             "tag": "soup",
             "patterns": [
-                "How to cook soup"
+                "Soup cook"
             ],
             "responses": [
-                "Place the meat, vegetables and other add-ins in the pot, along with the raw chicken (if using), and add enough liquid to cover. Season with salt. Increase heat to high and bring to a boil, then reduce to a simmer. Cook until the flavors have come together and the vegetables and greens are tender, about 20 minutes more."
+                "Easy"
             ]
         }
     ]

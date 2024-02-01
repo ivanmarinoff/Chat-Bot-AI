@@ -1,16 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chatbot Learn</title>
-    <!-- Include CSRF token -->
-    {% csrf_token %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .chat-container {
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
-    <div>
-        <h1>Learn Chatbot</h1>
-        <form id="learnForm" method="post" action="{% url 'learn_chatbot' %}">
+    <div class="container">
+        <h1 class="mt-5">Learn Chatbot</h1>
+        <form id="chat-container" method="post" action="{% url 'learn_chatbot' %}">
             {% csrf_token %}
             <label for="tag">Tag:</label>
             <input type="text" id="tag" name="tag"><br>

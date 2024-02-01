@@ -157,7 +157,6 @@ def getResponse(return_list, intents_json):
     #         latest_conf = np.array(latest_conf)
     #         latest_deaths = np.array(latest_deaths)
     #         print('Confirmed: ', np.sum(latest_conf), 'Deaths: ', np.sum(latest_deaths))
-
     list_of_intents = intents_json['intents']
     for i in list_of_intents:
         if tag == i['tag']:

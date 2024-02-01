@@ -30,7 +30,10 @@ class LearnChatbotView(View):
                 'responses': [reply]
             })
 
-        with open('intents.json', 'w') as outfile:
-            json.dump(intents, outfile, indent=4)
+        with open('chat_bot/intents.json', 'w', encoding='utf-8') as outfile:
+            json.dump(intents, outfile, ensure_ascii=False, indent=4)
 
-        return JsonResponse({'message': 'Learning completed successfully'}, status=200)
+        # with open('intents.json', 'r') as infile:
+        #     intents = json.load(infile)
+
+        return JsonResponse({'message': f'Learning wit tag {tag} completed successfully'}, status=200)

@@ -9,7 +9,6 @@ import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense, Dropout
 import random
-from googlesearch import *
 
 
 
