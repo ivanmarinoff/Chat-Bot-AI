@@ -1,5 +1,5 @@
 import os
-
+from keras.models import load_model
 from dotenv import load_dotenv
 from pathlib import Path
 
@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Update file paths using BASE_DIR
 data_file_path = os.path.join(BASE_DIR, 'chat_bot/intents.json')
 model_save_path = os.path.join(BASE_DIR, 'chat_bot/chatbot_model.keras')
-
+model = load_model(os.path.join(BASE_DIR, 'chat_bot/chatbot_model.keras'))
 # Use BASE_DIR in your script
 data_file = open(data_file_path).read()
 
