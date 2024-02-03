@@ -1,3 +1,5 @@
+import os
+
 import nltk
 from Scripts.bottle import response
 from django.http import JsonResponse
@@ -18,8 +20,10 @@ import json
 import random
 from regex import search
 
+from chat_bot.settings import BASE_DIR
+
 lemmatizer = WordNetLemmatizer()
-model = load_model('chat_bot/chatbot_model.keras')
+model = load_model(os.path.join(BASE_DIR, 'chat_bot/chatbot_model.keras'))
 intents = json.loads(open('chat_bot/intents.json').read())
 words = pickle.load(open('chat_bot/words.pkl', 'rb'))
 classes = pickle.load(open('chat_bot/classes.pkl', 'rb'))
@@ -57,21 +61,22 @@ def predict_class(sentence, model):
     return return_list
 
 
-def getResponse(return_list, intents_json):
-    # tag = ints[0]['intent']
-    # list_of_intents = intents_json['intents']
-    # for i in list_of_intents:
-    #     if (i['tag'] == tag):
-    #         result = random.choice(i['responses'])
-    #         break
-    # return result
-    if len(return_list) == 0:
-        tag = 'noanswer'
-    else:
-        tag = return_list[0]['intent']
+def getResponse(ints, intents_json):
+    tag = ints[0]['intent']
+    list_of_intents = intents_json['intents']
+    for i in list_of_intents:
+        if (i['tag'] == tag):
+            result = random.choice(i['responses'])
+            break
+    return result
 
-    if tag == 'datetime':
-        return time.strftime("%d %B %Y %A %H:%M:%S")
+    # if len(return_list) == 0:
+    #     tag = 'noanswer'
+    # else:
+    #     tag = return_list[0]['intent']
+    #
+    # if tag == 'datetime':
+    #     return time.strftime("%d %B %Y %A %H:%M:%S")
         # print(time.strftime("%A"))
         # print(time.strftime("%d %B %Y"))
         # print(time.strftime("%H:%M:%S"))
@@ -96,21 +101,21 @@ def getResponse(return_list, intents_json):
     #     print('Feels Like:: ', round(x['main']['feels_like'] - 273, 2), 'celcius ')
     #     print(x['weather'][0]['main'])
 
-    if tag == 'news':
-        # main_url = " http://newsapi.org/v2/top-headlines?country=us&apiKey=bc88c2e1ddd440d1be2cb0788d027ae2"
-        main_url = " http://newsapi.org/v2/everything?domains=wsj.com&apiKey=bc88c2e1ddd440d1be2cb0788d027ae2"
-        open_news_page = requests.get(main_url).json()
-        article = open_news_page["articles"]
-        results = []
-
-        for ar in article:
-            results.append([ar["title"], ar["url"]])
-
-        for i in range(10):
-            # print(i + 1, results[i][0])
-            result = i + 1
-            return str(result) + '. ' + results[i][0]
-            # print(results[i][1], '\n')
+    # if tag == 'news':
+    #     # main_url = " http://newsapi.org/v2/top-headlines?country=us&apiKey=bc88c2e1ddd440d1be2cb0788d027ae2"
+    #     main_url = " http://newsapi.org/v2/everything?domains=wsj.com&apiKey=bc88c2e1ddd440d1be2cb0788d027ae2"
+    #     open_news_page = requests.get(main_url).json()
+    #     article = open_news_page["articles"]
+    #     results = []
+    #
+    #     for ar in article:
+    #         results.append([ar["title"], ar["url"]])
+    #
+    #     for i in range(10):
+    #         # print(i + 1, results[i][0])
+    #         result = i + 1
+    #         return str(result) + '. ' + results[i][0]
+    #         # print(results[i][1], '\n')
 
     # if tag == 'cricket':
     #     c = Cricbuzz()
@@ -118,21 +123,21 @@ def getResponse(return_list, intents_json):
     #     for match in matches:
     #         print(match['srs'], ' ', match['mnum'], ' ', match['status'])
 
-    if tag == 'song':
-        chart = billboard.ChartData('hot-100')
-        print('The top 10 songs at the moment are:')
-        for i in range(10):
-            song = chart[i]
-            # print(song.title, '- ', song.artist)
-            return str(i + 1) + '. ' + song.title + ' - ' + song.artist
-
-    if tag == 'timer':
-        mixer.init()
-        # x = input('Minutes to timer..')
-        x = 5
-        time.sleep(float(x) * 60)
-        mixer.music.load('Handbell-ringing-sound-effect.mp3')
-        mixer.music.play()
+    # if tag == 'song':
+    #     chart = billboard.ChartData('hot-100')
+    #     print('The top 10 songs at the moment are:')
+    #     for i in range(10):
+    #         song = chart[i]
+    #         # print(song.title, '- ', song.artist)
+    #         return str(i + 1) + '. ' + song.title + ' - ' + song.artist
+    #
+    # if tag == 'timer':
+    #     mixer.init()
+    #     # x = input('Minutes to timer..')
+    #     x = 5
+    #     time.sleep(float(x) * 60)
+    #     mixer.music.load('Handbell-ringing-sound-effect.mp3')
+    #     mixer.music.play()
 
     # if tag == 'covid19':
     #
@@ -157,11 +162,11 @@ def getResponse(return_list, intents_json):
     #         latest_conf = np.array(latest_conf)
     #         latest_deaths = np.array(latest_deaths)
     #         print('Confirmed: ', np.sum(latest_conf), 'Deaths: ', np.sum(latest_deaths))
-    list_of_intents = intents_json['intents']
-    for i in list_of_intents:
-        if tag == i['tag']:
-            result = random.choice(i['responses'])
-    return result
+    # list_of_intents = intents_json['intents']
+    # for i in list_of_intents:
+    #     if tag == i['tag']:
+    #         result = random.choice(i['responses'])
+    # return result
 
 
 def chatbot_view(request):

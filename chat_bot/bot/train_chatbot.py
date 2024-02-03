@@ -1,24 +1,21 @@
 import os
-
-import nltk
-# from keras.src.optimizers import SGD
 import keras
+import nltk
+from keras.src.optimizers import SGD
 from nltk.stem import WordNetLemmatizer
-
-
 import json
 import pickle
 import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense, Dropout
 import random
-from chat_bot.settings import BASE_DIR
+from chat_bot.settings import BASE_DIR, data_file
 
 words = []
 classes = []
 documents = []
 ignore_words = ['?', '!', ',']
-data_file = open(os.path.join(BASE_DIR, 'intents.json')).read()
+# data_file = open(os.path.join(BASE_DIR, 'intents.json')).read()
 intents = json.loads(data_file)
 lemmatizer = WordNetLemmatizer()
 for intent in intents['intents']:
@@ -68,9 +65,11 @@ model.add(Dropout(0.5))
 model.add(Dense(64, activation='relu'))
 model.add(Dropout(0.5))
 model.add(Dense(len(train_y[0]), activation='softmax'))
+
 # Compile model. Stochastic gradient descent with Nesterov accelerated gradient gives good results for this model
 # sgd = SGD(lr=0.01, decay=1e-6, momentum=0.9, nesterov=True)
 # model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
+
 
 adam = keras.optimizers.Adam(0.001)
 model.compile(optimizer=adam, loss='categorical_crossentropy', metrics=['accuracy'])
@@ -78,10 +77,11 @@ model.compile(optimizer=adam, loss='categorical_crossentropy', metrics=['accurac
 
 def train_chatbot():
     hist = model.fit(np.array(train_x), np.array(train_y), epochs=200, batch_size=5, verbose=1)
-    # model.save('chatbot_model.h5', hist)
     model.save('../chatbot_model.keras', hist)
     print("model created")
 
+
+train_chatbot()
 
 # def check_json_changes():
 #     # Get the last modification time of the JSON file

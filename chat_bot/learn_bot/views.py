@@ -9,6 +9,21 @@ from chat_bot.bot.train_chatbot import train_chatbot
 from chat_bot.bot.views import intents
 
 
+def find_tag_index(tag):
+    """Find the index of the intent with the given tag."""
+    for i, intent in enumerate(intents['intents']):
+        if tag == intent['tag'].lower():
+            return i
+    return None
+
+
+def check_tag_yield(tag):
+    """Check if the JSON file contains a tag with the newly added word and yield its index."""
+    for i, intent in enumerate(intents['intents']):
+        if tag == intent['tag'].lower():
+            yield i
+
+
 class LearnChatbotView(View):
     def get(self, request):
         return render(request, 'learn.html')
@@ -37,20 +52,7 @@ class LearnChatbotView(View):
         with open('chat_bot/intents.json', 'w', encoding='utf-8') as outfile:
             json.dump(intents, outfile, ensure_ascii=False, indent=4)
 
-        for i in self.check_tag_yield(tag):
+        for i in check_tag_yield(tag):
             Timer(5, train_chatbot).start()
 
         return JsonResponse({'message': f'Learning with tag {tag} completed successfully'}, status=200)
-
-    def find_tag_index(self, tag):
-        """Find the index of the intent with the given tag."""
-        for i, intent in enumerate(intents['intents']):
-            if tag == intent['tag'].lower():
-                return i
-        return None
-
-    def check_tag_yield(self, tag):
-        """Check if the JSON file contains a tag with the newly added word and yield its index."""
-        for i, intent in enumerate(intents['intents']):
-            if tag == intent['tag'].lower():
-                yield i
