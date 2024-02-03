@@ -12,13 +12,13 @@ import numpy as np
 from keras.models import Sequential
 from keras.layers import Dense, Dropout
 import random
-import time
+from chat_bot.settings import BASE_DIR
 
 words = []
 classes = []
 documents = []
 ignore_words = ['?', '!', ',']
-data_file = open('chat_bot/intents.json').read()
+data_file = open(os.path.join(BASE_DIR, 'intents.json')).read()
 intents = json.loads(data_file)
 lemmatizer = WordNetLemmatizer()
 for intent in intents['intents']:
@@ -81,6 +81,7 @@ def train_chatbot():
     # model.save('chatbot_model.h5', hist)
     model.save('../chatbot_model.keras', hist)
     print("model created")
+
 
 # def check_json_changes():
 #     # Get the last modification time of the JSON file
