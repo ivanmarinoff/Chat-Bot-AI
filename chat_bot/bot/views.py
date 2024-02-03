@@ -62,6 +62,9 @@ def predict_class(sentence, model):
 
 
 def getResponse(ints, intents_json):
+    if not ints:
+        return "I'm sorry, I don't understand that."
+
     tag = ints[0]['intent']
     list_of_intents = intents_json['intents']
     for i in list_of_intents:

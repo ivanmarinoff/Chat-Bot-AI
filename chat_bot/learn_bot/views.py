@@ -5,7 +5,7 @@ import json
 from django.shortcuts import render
 from django.http import JsonResponse
 
-from chat_bot.bot.train_chatbot import train_chatbot
+from chat_bot.bot.train_chatbot import ChatbotTrainer
 from chat_bot.bot.views import intents
 
 
@@ -53,6 +53,7 @@ class LearnChatbotView(View):
             json.dump(intents, outfile, ensure_ascii=False, indent=4)
 
         for i in check_tag_yield(tag):
-            Timer(5, train_chatbot).start()
+            trainer = ChatbotTrainer()
+            trainer.train_chatbot()
 
         return JsonResponse({'message': f'Learning with tag {tag} completed successfully'}, status=200)
