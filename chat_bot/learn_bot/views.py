@@ -38,7 +38,7 @@ class LearnChatbotView(View):
             json.dump(intents, outfile, ensure_ascii=False, indent=4)
 
         for i in self.check_tag_yield(tag):
-            Timer(5, train_chatbot()).start()
+            Timer(5, train_chatbot).start()
 
         return JsonResponse({'message': f'Learning with tag {tag} completed successfully'}, status=200)
 
