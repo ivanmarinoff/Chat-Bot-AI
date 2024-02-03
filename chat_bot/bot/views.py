@@ -80,9 +80,9 @@ def getResponse(ints, intents_json):
     #
     # if tag == 'datetime':
     #     return time.strftime("%d %B %Y %A %H:%M:%S")
-        # print(time.strftime("%A"))
-        # print(time.strftime("%d %B %Y"))
-        # print(time.strftime("%H:%M:%S"))
+    # print(time.strftime("%A"))
+    # print(time.strftime("%d %B %Y"))
+    # print(time.strftime("%H:%M:%S"))
 
     # if tag == 'google':
     #     query = []
@@ -91,7 +91,6 @@ def getResponse(ints, intents_json):
     #     for url in search(query, tld="co.in", num=10, stop=10, pause=2):
     #         webbrowser.open("https://google.com/search?q=%s" % query)
     #         return str(url)
-
 
     # if tag == 'weather':
     #     api_key = ''
@@ -165,11 +164,7 @@ def getResponse(ints, intents_json):
     #         latest_conf = np.array(latest_conf)
     #         latest_deaths = np.array(latest_deaths)
     #         print('Confirmed: ', np.sum(latest_conf), 'Deaths: ', np.sum(latest_deaths))
-    # list_of_intents = intents_json['intents']
-    # for i in list_of_intents:
-    #     if tag == i['tag']:
-    #         result = random.choice(i['responses'])
-    # return result
+
 
 
 def chatbot_view(request):
@@ -183,7 +178,6 @@ def chatbot_view(request):
             return render(request, 'chatbot.html', {'error': 'Message field is required.'})
     else:
         return render(request, 'chatbot.html')
-
 
 # while (1):
 #     x = input()
@@ -209,4 +203,3 @@ def chatbot_view(request):
 #
 # with open('intents.json', 'w') as outfile:
 #     outfile.write(json.dumps(intents, indent=4))
-
