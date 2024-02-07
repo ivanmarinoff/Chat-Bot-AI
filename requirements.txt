@@ -94,4 +94,3 @@ wrapt==1.14.1
 pycricbuzz~=2.4
 pygame~=2.5.2
 django-googlesearch~=0.2
-COVID19Py~=0.3.0
